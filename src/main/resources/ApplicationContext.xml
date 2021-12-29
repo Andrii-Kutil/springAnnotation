@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+  <!--указать путь к файлику пропертей-->
+  <context:property-placeholder location="classpath:application.properties"/>
+  <context:component-scan base-package="com.gmail.kutilandrej"/>
+
+  <bean id="musicPlayer"
+    class="com.gmail.kutilandrej.model.MusicPlayer"
+    init-method="myInit"
+    destroy-method="myDestroy"
+    factory-method="myFactory"
+  scope="prototype">
+  <!--нужно сетеры создать-->
+    <property name="genre" ref="rockMusic"/>
+    <property name="brand" value="${MusicPlayer.brand}"/>
+    <property name="version" value="${MusicPlayer.version}"/>
+    <property name="volume" value="test4"/>
+    <!--нужно конструктор создать-->
+    <constructor-arg type="com.gmail.kutilandrej.model.RockMusic" ref="rockMusic"/>
+  </bean>
+
+  <bean id="rockMusic"
+    class="com.gmail.kutilandrej.model.RockMusic">
+  </bean>
+</beans>
